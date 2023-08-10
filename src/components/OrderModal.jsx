@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./styles/OrderModal.module.css";
@@ -40,6 +41,8 @@ function OrderModal({ order, setOrderModal }) {
     setAddressError(value ? "" : "Address is required");
   };
 
+  const navigate = useNavigate();
+
   const placeOrder = async () => {
     const response = await fetch("/api/orders", {
       method: "POST",
@@ -53,8 +56,13 @@ function OrderModal({ order, setOrderModal }) {
         items: order
       })
     });
-    const data = await response.json();
-    console.log(data);
+    if (response.status === 200) {
+      const data = await response.json();
+      navigate(`/order-confirmation/${data.id}`);
+      toast.success("Order placed successfully!");
+    } else {
+      toast.error("Order placement failed");
+    }
   };
   return (
     <>
