@@ -1,5 +1,4 @@
 import { ToastContainer } from "react-toastify";
-import { ToastContainer } from "react-toastify";
 import AppRoutes from "./AppRoutes";
 import Nav from "./components/Nav";
 
